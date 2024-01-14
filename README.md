@@ -27,9 +27,22 @@ cd To_do_expo_app
 
 npx expo start
 
+After this following type of QR will be generated
+
+
+![WhatsApp Image 2024-01-14 at 6 38 17 PM](https://github.com/shashank2532/To_do_expo_app/assets/140298043/7c679348-5552-47c1-8df8-fe9a72f32e9f)
+
+
+
 4.Install Expo go mobile app on your android or IOS or press w in terminal to run on web.
 
 5.To run on mobile, after downloading the expo go app scan the QR code generated in the terminal with app.
+
+
+
+https://github.com/shashank2532/To_do_expo_app/assets/140298043/f1e1035b-b9b3-4765-b26a-c6f67125ecd4
+
+
 
 Dependencies:
 
