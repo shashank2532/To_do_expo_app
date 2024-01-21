@@ -15,7 +15,8 @@ import Items from "./components/items";
 export default function App() {
   const [text, setText] = useState(null);
   const [forceUpdate, forceUpdateId] = useForceUpdate();
-
+  const [search, setSearch] = useState("");
+  
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -46,6 +47,7 @@ export default function App() {
     );
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>To Do App</Text>
@@ -68,29 +70,43 @@ export default function App() {
               style={styles.input}
               value={text}
             />
+           
             <TouchableOpacity onPress={addTask} style={styles.addButton}>
               <Text style={{ color: "#fff" }}>Add</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.flexRow}>
+               
+          <TextInput
+              onChangeText={newText => setSearch(newText)}
+              placeholder="search your task's here"
+              value={search}
+              
+            />
+           
           </View>
           <ScrollView style={styles.listArea}>
             <Items
               key={`forceupdate-todo-${forceUpdateId}`}
               done={false}
+              search={search}
               onPressItem={(id) =>
                 db.transaction(
                   (tx) => {
-                    tx.executeSql(`update items set done = 1 where id = ?;`, [
-                      id,
-                    ]);
+                    tx.executeSql(`update items set done = 1 where id = ?;`, [id]);
                   },
                   null,
                   forceUpdate
                 )
               }
+              
+          
             />
             <Items
               done
               key={`forceupdate-done-${forceUpdateId}`}
+              search={search}
               onPressItem={(id) =>
                 db.transaction(
                   (tx) => {
@@ -100,6 +116,7 @@ export default function App() {
                   forceUpdate
                 )
               }
+
             />
           </ScrollView>
         </>
@@ -155,3 +172,4 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
 });
+
