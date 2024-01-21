@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { db } from "./database";
 
-function Items({ done: doneHeading, onPressItem }) {
+
+function Items({ done: doneHeading, search, onPressItem }) {
   const [items, setItems] = useState(null);
+  
+  
 
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        `select * from items where done = ?;`,
-        [doneHeading ? 1 : 0],
+        `select * from items where done = ? and value like ? ;`,
+        [doneHeading ? 1 : 0, `%${search}%`],
         (_, { rows: { _array } }) => setItems(_array)
       );
     });
-  }, []);
+  }, [doneHeading,search,]);
 
   const heading = doneHeading ? "Completed task's" : "Task's left to be done";
 
